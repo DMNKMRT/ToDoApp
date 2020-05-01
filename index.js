@@ -1,2 +1,1 @@
-Mooooinnnnn
-Willkommen
+Hallo
