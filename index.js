@@ -1,8 +1,9 @@
+
 function getTodoItems() {
   var items = [
     {
       title: "Einkaufen",
-      descriiption: "Ich muss ein paar Äpfel Kaufen",
+      description: "Ich muss ein paar Äpfel Kaufen",
       color: "yellow";
     },
     {
@@ -34,3 +35,5 @@ function getTodoItems() {
 
   return items;
 }
+
+var todo_list = document.getElementById("todo_list");
