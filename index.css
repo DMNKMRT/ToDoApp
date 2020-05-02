@@ -17,6 +17,14 @@ ul, ol {
   margin: 0;
 }
 
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-indent: 0;
+  list-style-type: 0;
+}
+
 html, body {
   width: 100vw;
   height: 100vh;
@@ -25,12 +33,16 @@ html, body {
 }
 
 .todo_list {
-  display: flex;
-  background-color: #d8e6eb;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-columns: minmax(200px, 400px);
+  grid-auto-rows: minmax(100px, 400px);
+  column-gap: 5rem;
+  row-gap: 5rem;
 
-  align-items: flex-start;
+  background-color: rgb(234, 242, 245);
 
-  padding: 2vh 2vw;
+  padding: 5rem 5rem ;
   width: 100vw;
   height: 100vh;
 }
@@ -38,15 +50,24 @@ html, body {
 
 .todo_item {
   display: flex;
-  background-color: #bdc2c9;
-  box-shadow:5px 5px 5px black;
+  background-color: rgb(223, 237, 238);
+  box-shadow:4px 4px 4px #6d8f94;
 
   flex-direction: column;
   align-items: flex-start;
 
-  margin: 1rem;
+  padding: 1rem;
+}
 
+.todo_item_title{
+  text-align: center;
+  width: 100%;
+  font-size: 2.0rem;
+  font-weight: bold;
+  border-bottom: 2px solid;
+}
 
-  width: 30rem;
-  height: 15rem;
+.todo_item_description{
+  font-size: 1.8rem;
+  padding: 0rem 1rem;
 }
