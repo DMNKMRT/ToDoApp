@@ -68,12 +68,12 @@ function todoOnSubmit(event) {
 
   if (!title) return false;
 
+  console.log();
   console.log(title);
   console.log(description);
   console.log(color);
 
   addTodo(title, description, color);
-  return false;
 }
 
 function updateTodo() {
