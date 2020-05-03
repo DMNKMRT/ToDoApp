@@ -38,7 +38,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-columns: minmax(200px, 400px);
-  grid-auto-rows: minmax(100px, 400px);
+  grid-auto-rows: minmax(300px, 1fr);
   column-gap: 5rem;
   row-gap: 5rem;
 
@@ -47,6 +47,8 @@ body {
   padding: 5rem 5rem;
   width: 100vw;
   height: 100vh;
+
+  overflow-y: auto;
 }
 
 .todo_item {
@@ -58,6 +60,7 @@ body {
   align-items: flex-start;
 
   padding: 1rem;
+  margin-bottom: 3rem;
 }
 
 .todo_item_title {
@@ -71,4 +74,23 @@ body {
 .todo_item_description {
   font-size: 1.8rem;
   padding: 0rem 1rem;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+#color_select{
+  width: 20rem;
+  font-size: 1.6rem;
+  border: 6px solid transparent;
+
+  background-color: transparent;
+}
+
+#color_option{
+
 }
