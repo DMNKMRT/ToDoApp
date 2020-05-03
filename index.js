@@ -57,8 +57,23 @@ function getTodoItems() {
 
 //Funktion um neue ToDos hinzuzufügen
 function addTodo(title, description, color) {
-  todo_items.push({title: title, description: description, color: color});
+  todo_items.push({ title: title, description: description, color: color });
   updateTodo();
+}
+
+function todoOnSubmit(event) {
+  const title = document.getElementById("todo_input_title").value;
+  const description = document.getElementById("todo_input_description").value;
+  const color = document.getElementById("color_select").value;
+
+  if (!title) return false;
+
+  console.log(title);
+  console.log(description);
+  console.log(color);
+
+  addTodo(title, description, color);
+  return false;
 }
 
 function updateTodo() {
@@ -83,18 +98,21 @@ function updateTodo() {
     "beforeend",
     `
     <li id="todo_item" class="todo_item">
-      <h1 class="todo_item_title">
-        <input type="text" class="todo_input" id="todo_input_title" value="" placeholder="Enter a title">
-      </h1>
-      <p class="todo_item_description">
-        <input type="text" class="todo_input" id="todo_input_description" value="" placeholder="Enter a description">
-      </p>
-        <select name="colors" id="color_select">
-          <option id="color_option" value="">please select a color</option>
-          <option id="color_option" value="red">red</option>
-          <option id="color_option" value="green">green</option>
-          <option id="color_option" value="yellow">yellow</option>
-        </select>
+      <form id="todo_form" action="#" onsubmit="return todoOnSubmit(event)">
+        <h1 class="todo_item_title">
+          <input type="text" class="todo_input" id="todo_input_title" value="" placeholder="Enter a title">
+        </h1>
+        <p class="todo_item_description">
+          <input type="text" class="todo_input" id="todo_input_description" value="" placeholder="Enter a description">
+        </p>
+          <select name="colors" id="color_select">
+            <option id="color_option" value="">please select a color</option>
+            <option id="color_option" value="red">red</option>
+            <option id="color_option" value="green">green</option>
+            <option id="color_option" value="yellow">yellow</option>
+          </select>
+        <button>Submit</button>
+      </form>
     </li>
     `
   );
