@@ -25,7 +25,8 @@ function getTodoItems() {
 //Funktion um neue ToDos hinzuzufügen
 function addTodo(title, description, color) {
   const new_todo = new TodoItem(title, description, color);
-  todo_items;
+  todo_items[new_todo.id] = new_todo;
+  console.log(`added ${new_todo} to todo list`)
   updateTodo();
 }
 
@@ -46,7 +47,11 @@ function todoOnSubmit(event) {
 function todoOnDone(event) {
   event.target.classList.toggle("checked");
   const id = event.target.attributes["data-todo-id"].value;
-  console.log(id);
+  const item = todo_items[id];
+  console.log(`${item} was clicked`);
+
+  item.done = true;
+  updateTodo();
 }
 
 function updateTodo() {
@@ -57,12 +62,17 @@ function updateTodo() {
   // Schleife um Items in die Liste hinzuzufügen
   for (i in items) {
     const item = items[i];
+    if (item.done) continue;
+
     todo_list.insertAdjacentHTML(
       "beforeend",
       `
         <li class="todo_item">
           <h1 class="todo_item_title">${item.title}
-            <button data-todo-id="${item.id}" class="todo_done_button" onclick="todoOnDone(event);"></button>
+            <button
+            data-todo-id="${item.id}"
+            class="todo_done_button"
+            onclick="todoOnDone(event);"></button>
           </h1>
           <p class="todo_item_description">${item.description}</p>
 
@@ -70,7 +80,7 @@ function updateTodo() {
       `
     );
   }
-
+  //Form Item, Da wo man seine ToDos erstellt
   todo_list.insertAdjacentHTML(
     "beforeend",
     `
@@ -88,7 +98,7 @@ function updateTodo() {
             <option id="color_option" value="green">green</option>
             <option id="color_option" value="yellow">yellow</option>
           </select>
-
+          <button>Submit</button>
       </form>
     </li>
     `

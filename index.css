@@ -98,7 +98,7 @@ input {
 .todo_done_button {
 
   margin-right: 2rem;
-
+  margin-bottom: 1rem;
   float: right;
   width: 3rem;
   height: 3rem;
@@ -107,4 +107,6 @@ input {
 
 .todo_done_button.checked::before {
   content: "✓";
+  font-size: 1.7rem;
+  font-weight: bold;
 }
