@@ -68,7 +68,6 @@ function todoOnSubmit(event) {
 
   if (!title) return false;
 
-  console.log();
   console.log(title);
   console.log(description);
   console.log(color);
