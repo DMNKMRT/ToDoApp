@@ -61,6 +61,7 @@ body {
 
   padding: 1rem;
   margin-bottom: 3rem;
+
 }
 
 .todo_item_title {
@@ -92,5 +93,18 @@ input {
 }
 
 #color_option{
+}
 
+.todo_done_button {
+
+  margin-right: 2rem;
+
+  float: right;
+  width: 3rem;
+  height: 3rem;
+
+}
+
+.todo_done_button.checked::before {
+  content: "✓";
 }

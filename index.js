@@ -1,55 +1,22 @@
-const todo_items = [
-  {
-    title: "Einkaufen",
-    description: "Ich muss ein paar Äpfel Kaufen",
-    color: "yellow",
-  },
-  {
-    title: "Einkaufen",
-    description: "Ich muss ein paar Äpfel Kaufen",
-    color: "yellow",
-  },
-  {
-    title: "Einkaufen",
-    description: "Ich muss ein paar Äpfel Kaufen",
-    color: "yellow",
-  },
-  {
-    title: "Einkaufen",
-    description: "Ich muss ein paar Äpfel Kaufen",
-    color: "yellow",
-  },
-  {
-    title: "Einkaufen",
-    description: "Ich muss ein paar Äpfel Kaufen",
-    color: "yellow",
-  },
-  {
-    title: "Sport",
-    description: "Heftiges Six Pack workout",
-    color: "red",
-  },
-  {
-    title: "Hausaufgaben",
-    description: "Physik Seite 430, Nr 1a)",
-    color: "green",
-  },
-  {
-    title: "Kino",
-    description: "Mit Erich ins Kino gehen",
-    color: "blue",
-  },
-  {
-    title: "ToDo-App programmieren",
-    description: "GitHub einrichten (2h), Fake-Daten schreiben (5m)",
-    color: "green",
-  },
-  {
-    title: "Einkaufen 2",
-    description: "Einkaufen gehen, und Zeug kaufen / klauen",
-    color: "yellow",
-  },
-];
+let next_id = 0;
+class TodoItem {
+  constructor(title, description, color, done = false) {
+    this.id = next_id++;
+    this.title = title;
+    this.description = description;
+    this.color = color;
+    this.done = done;
+  }
+}
+
+const todo_items = {
+  "0": new TodoItem("Irgendwas 1", "blablabla", "red"),
+  "1": new TodoItem("Irgendwas 2", "blablabla", "red"),
+  "2": new TodoItem("Irgendwas 3", "blablabla", "red"),
+  "3": new TodoItem("Irgendwas 4", "blablabla", "red"),
+  "4": new TodoItem("Irgendwas 5", "blablabla", "red"),
+  "5": new TodoItem("Irgendwas 6", "blablabla", "red"),
+};
 
 function getTodoItems() {
   return todo_items;
@@ -57,7 +24,8 @@ function getTodoItems() {
 
 //Funktion um neue ToDos hinzuzufügen
 function addTodo(title, description, color) {
-  todo_items.push({ title: title, description: description, color: color });
+  const new_todo = new TodoItem(title, description, color);
+  todo_items;
   updateTodo();
 }
 
@@ -75,24 +43,34 @@ function todoOnSubmit(event) {
   addTodo(title, description, color);
 }
 
+function todoOnDone(event) {
+  event.target.classList.toggle("checked");
+  const id = event.target.attributes["data-todo-id"].value;
+  console.log(id);
+}
+
 function updateTodo() {
   var todo_list = document.getElementById("todo_list");
   var items = getTodoItems();
 
   todo_list.innerHTML = "";
-  //Schleife um Items in die Liste hinzuzufügen
-  for (let i = 0; i < items.length; i++) {
-    let item = items[i];
+  // Schleife um Items in die Liste hinzuzufügen
+  for (i in items) {
+    const item = items[i];
     todo_list.insertAdjacentHTML(
       "beforeend",
       `
-        <li id="todo_item" class="todo_item">
-          <h1 class="todo_item_title">${item["title"]}</h1>
-          <p class="todo_item_description">${item["description"]}</p>
+        <li class="todo_item">
+          <h1 class="todo_item_title">${item.title}
+            <button data-todo-id="${item.id}" class="todo_done_button" onclick="todoOnDone(event);"></button>
+          </h1>
+          <p class="todo_item_description">${item.description}</p>
+
         </li>
       `
     );
   }
+
   todo_list.insertAdjacentHTML(
     "beforeend",
     `
@@ -110,11 +88,10 @@ function updateTodo() {
             <option id="color_option" value="green">green</option>
             <option id="color_option" value="yellow">yellow</option>
           </select>
-        <button>Submit</button>
+
       </form>
     </li>
     `
   );
 }
-
 updateTodo();
