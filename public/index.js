@@ -22,12 +22,23 @@ function getTodoItems() {
 
 //Funktion um neue ToDos hinzuzufügen
 function addTodo(title, description, color) {
-  const new_todo = {todo_item: {title: title, description: description, color: color, done: false}}
+  const new_todo = {
+    todo_item: {
+      title: title,
+      description: description,
+      color: color,
+      done: false,
+    },
+  };
   console.log(new_todo);
 
-  fetch("http://localhost:5000/todo", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(new_todo) })
+  fetch("http://localhost:5000/todo", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(new_todo),
+  })
     .then((response) => {
-      console.log(response)
+      console.log(response);
       return response.json();
     })
     .then((response) => {
@@ -49,7 +60,7 @@ function todoOnSubmit(event) {
 
   addTodo(title, description, color);
 
-  return false
+  return false;
 }
 
 function todoOnDone(event) {
