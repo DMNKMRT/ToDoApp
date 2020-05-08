@@ -26,7 +26,7 @@ function getTodoItems() {
 function addTodo(title, description, color) {
   const new_todo = new TodoItem(title, description, color);
   todo_items[new_todo.id] = new_todo;
-  console.log(`added ${new_todo} to todo list`)
+  console.log(`added ${new_todo} to todo list`);
   updateTodo();
 }
 
@@ -66,8 +66,8 @@ function updateTodo() {
 
     todo_list.insertAdjacentHTML(
       "beforeend",
-      `
-        <li class="todo_item">
+      // ToDo Item (HTML)
+      `<li class="todo_item">
           <h1 class="todo_item_title">${item.title}
             <button
             data-todo-id="${item.id}"
@@ -75,9 +75,7 @@ function updateTodo() {
             onclick="todoOnDone(event);"></button>
           </h1>
           <p class="todo_item_description">${item.description}</p>
-
-        </li>
-      `
+        </li>`
     );
   }
   //Form Item, Da wo man seine ToDos erstellt

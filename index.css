@@ -62,6 +62,12 @@ body {
   padding: 1rem;
   margin-bottom: 3rem;
 
+  transition: box-shadow 0.35s ease-in-out;
+}
+
+.todo_item:hover {
+  box-shadow: 9px 9px 9px #8da8ac;
+  transition: box-shadow 0.35s ease-in-out;
 }
 
 .todo_item_title {
@@ -84,7 +90,7 @@ input {
   font-weight: bold;
 }
 
-#color_select{
+#color_select {
   width: 20rem;
   font-size: 1.6rem;
   border: 6px solid transparent;
@@ -92,17 +98,15 @@ input {
   background-color: transparent;
 }
 
-#color_option{
+#color_option {
 }
 
 .todo_done_button {
-
   margin-right: 2rem;
   margin-bottom: 1rem;
   float: right;
   width: 3rem;
   height: 3rem;
-
 }
 
 .todo_done_button.checked::before {
