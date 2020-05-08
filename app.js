@@ -27,6 +27,7 @@ app.get('/todo/:id', (req, res) => {
 app.post('/todo', (req, res) => {
   const id = nextId++
   const todo_item = req.body.todo_item
+  console.log(todo_item)
   todo_item['id'] = id
   todo_items[id] = todo_item
   res.json(todo_item)

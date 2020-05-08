@@ -1,7 +1,5 @@
-let next_id = 0;
 class TodoItem {
   constructor(title, description, color, done = false) {
-    this.id = next_id++;
     this.title = title;
     this.description = description;
     this.color = color;
@@ -24,10 +22,18 @@ function getTodoItems() {
 
 //Funktion um neue ToDos hinzuzufügen
 function addTodo(title, description, color) {
-  const new_todo = new TodoItem(title, description, color);
-  todo_items[new_todo.id] = new_todo;
-  console.log(`added ${new_todo} to todo list`);
-  updateTodo();
+  const new_todo = {todo_item: {title: title, description: description, color: color, done: false}}
+  console.log(new_todo);
+
+  fetch("http://localhost:5000/todo", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(new_todo) })
+    .then((response) => {
+      console.log(response)
+      return response.json();
+    })
+    .then((response) => {
+      console.log(`Test: ${response}`);
+      updateTodo();
+    });
 }
 
 function todoOnSubmit(event) {
@@ -42,6 +48,8 @@ function todoOnSubmit(event) {
   console.log(color);
 
   addTodo(title, description, color);
+
+  return false
 }
 
 function todoOnDone(event) {
@@ -58,16 +66,22 @@ function updateTodo() {
   var todo_list = document.getElementById("todo_list");
   var items = getTodoItems();
 
-  todo_list.innerHTML = "";
-  // Schleife um Items in die Liste hinzuzufügen
-  for (i in items) {
-    const item = items[i];
-    if (item.done) continue;
+  fetch("http://localhost:5000/todo")
+    .then((response) => {
+      return response.json();
+    })
+    .then((response) => {
+      todo_list.innerHTML = "";
+      // Schleife um Items in die Liste hinzuzufügen
+      for (i in response) {
+        const item = response[i];
+        console.log(item);
+        if (item.done) continue;
 
-    todo_list.insertAdjacentHTML(
-      "beforeend",
-      // ToDo Item (HTML)
-      `<li class="todo_item">
+        todo_list.insertAdjacentHTML(
+          "beforeend",
+          // ToDo Item (HTML)
+          `<li class="todo_item">
           <h1 class="todo_item_title">${item.title}
             <button
             data-todo-id="${item.id}"
@@ -76,12 +90,12 @@ function updateTodo() {
           </h1>
           <p class="todo_item_description">${item.description}</p>
         </li>`
-    );
-  }
-  //Form Item, Da wo man seine ToDos erstellt
-  todo_list.insertAdjacentHTML(
-    "beforeend",
-    `
+        );
+      }
+      //Form Item, Da wo man seine ToDos erstellt
+      todo_list.insertAdjacentHTML(
+        "beforeend",
+        `
     <li id="todo_item" class="todo_item">
       <form id="todo_form" action="#" onsubmit="return todoOnSubmit(event)">
         <h1 class="todo_item_title">
@@ -100,6 +114,7 @@ function updateTodo() {
       </form>
     </li>
     `
-  );
+      );
+    });
 }
 updateTodo();
