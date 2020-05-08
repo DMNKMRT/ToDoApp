@@ -1,0 +1,30 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "Simple todoapp web api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erich0123/ToDoApp.git"
+  },
+  "keywords": [
+    "todo",
+    "api"
+  ],
+  "author": "Erich Schneider",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erich0123/ToDoApp/issues"
+  },
+  "homepage": "https://github.com/erich0123/ToDoApp#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
