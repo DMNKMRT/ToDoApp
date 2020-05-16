@@ -42,15 +42,24 @@ function addTodo(title, description, color) {
 function todoOnSubmit(event) {
   const title = qs("#todo_input_title");
   const description = qs("#todo_input_description");
-  // const color = qs("#color_select");
+  let color = "";
+
+  document.querySelectorAll('input[name="color"]').forEach((item, i) => {
+    if (item.checked) {
+      color = item.value;
+      return;
+    }
+  });
+
+  console.log("Color:", color);
 
   try {
     if (!title.value) return false;
-    addTodo(title.value, description.value, "red");
+    addTodo(title.value, description.value, color);
   } finally {
     title.value = "";
     description.value = "";
-    // color.value = "";
+    qs("#color-blue").checked = true;
     return false;
   }
 }
@@ -71,7 +80,7 @@ function insertTodoItem(item) {
   qs("#todo_list").insertAdjacentHTML(
     "afterbegin",
     `
-    <li class="todo_item" id="todo-item-${item.id}">
+    <li class="todo_item ${item.color}" id="todo-item-${item.id}">
       <h1 class="todo_item_title">
         ${item.title}
         <button data-todo-id="${item.id}" class="todo_done_button"

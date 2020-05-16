@@ -53,7 +53,7 @@ body {
 
 .todo_item {
   display: flex;
-  background-color: rgb(223, 237, 238);
+  /*background-color: rgb(223, 237, 238);*/
   box-shadow: 4px 4px 4px #6d8f94;
 
   flex-direction: column;
@@ -138,16 +138,16 @@ input[type="radio"]:checked ~ .color-box {
   border-bottom: 0.1rem solid rgba(255, 255, 255, 255, 0.1);
 }
 
-.color-box.red {
+.red {
   background-color: #c96059;
 }
-.color-box.green {
+.green {
   background-color: #71c45e;
 }
-.color-box.yellow {
+.yellow {
   background-color: #d4d259;
 }
-.color-box.blue {
+.blue {
   background-color: #6dbacf;
 }
 
