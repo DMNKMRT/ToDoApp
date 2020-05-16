@@ -7,6 +7,7 @@ const log = console.log.bind();
 
 const app = express();
 
+app.use(express.static("public"));
 app.use(cors());
 app.use(express.json());
 
@@ -24,6 +25,7 @@ function validate_todo_id(req, res, next) {
   if (!(todo_id in todo_lists[list_id].todo_items))
     return res.status(404).send(status.item_not_found);
   next();
+
 }
 
 app.get("/new", (req, res) => {
@@ -63,4 +65,4 @@ app.patch(
   }
 );
 
-app.listen(5000);
+app.listen(8080);

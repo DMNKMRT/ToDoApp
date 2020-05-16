@@ -2,6 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!--
+          ___
+         /   \
+        / Ö Ö \
+        \_-___/
+          ||
+     ____/  \____
+  >-|____/||\____|-<
+          ||
+          ||
+         /  \
+        /    \
+       /      \
+
+                        .
+                        / \/\
+Dominik               / '   /
+   Martin            <<     |
+                     /      |
+                   /       |
+                 /        |
+               /      \  /
+             (       |  |
+    _________|       |  |
+   (________\______)\___)
+-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="index.css" />
@@ -13,11 +39,56 @@
     <title>ToDo-App</title>
   </head>
   <body>
-    <header></header>
-    <main>
+    <div id="start-page" class="start-page page page-active">
+      <div class="start_text">
+        <h1 id="willkommen">Welcome!!</h1>
+        <h2 id="enter_a_id">Enter a ID to open a list</h2>
+      </div>
+      <div class="input_btn">
+        <input type="text" id="list_id" placeholder="Enter id" />
+        <button id="open_list_btn">Open</button>
+        <button id="new_list_btn">New List</button>
+      </div>
+      <div class="start_text">
+        <h2>Or create a new list</h2>
+      </div>
+    </div>
+
+    <div id="todo-page" class="todo-page page">
       <!-- ToDo Karten -->
-      <ul id="todo_list" class="todo_list"></ul>
-    </main>
-    <footer></footer>
+      <ul id="todo_list" class="todo_list">
+        <li class="todo_item">
+          <form id="todo_form" action="#" onsubmit="return todoOnSubmit(event)">
+            <h1 class="todo_item_title">
+              <input
+                type="text"
+                class="todo_input_title"
+                id="todo_input_title"
+                value=""
+                placeholder="Enter a title"
+              />
+            </h1>
+            <p class="todo_item_description">
+              <input
+                type="text"
+                class="todo_input_description"
+                id="todo_input_description"
+                value=""
+                placeholder="Enter a description"
+              />
+            </p>
+            <select name="colors" id="color_select" class="color_select">
+              <option class="color_option" value="" disabled selected
+                >Please select a color</option
+              >
+              <option class="color_option" value="red">red</option>
+              <option class="color_option" value="green">green</option>
+              <option class="color_option" value="yellow">yellow</option>
+            </select>
+            <button>Submit</button>
+          </form>
+        </li>
+      </ul>
+    </div>
   </body>
 </html>

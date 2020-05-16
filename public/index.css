@@ -90,7 +90,7 @@ input {
   font-weight: bold;
 }
 
-#color_select {
+.color_select {
   width: 20rem;
   font-size: 1.6rem;
   border: 6px solid transparent;
@@ -98,7 +98,7 @@ input {
   background-color: transparent;
 }
 
-#color_option {
+.color_option {
 }
 
 .todo_done_button {
@@ -113,4 +113,60 @@ input {
   content: "✓";
   font-size: 1.7rem;
   font-weight: bold;
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+.page.page-active {
+  visibility: visible;
+}
+
+.start-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(234, 242, 245);
+}
+
+#Willkommen {
+  font-size: 9rem;
+  position: relative;
+  bottom: 7rem;
+  color: #4e95a3;
+}
+
+.start_text {
+  font-size: 1.8rem;
+  margin: 1rem;
+  color: #5bb1c2;
+}
+
+#enter_a_id {
+  position: relative;
+  left: 70px;
+}
+
+.input_btn {
+  display: flex;
+  flex-direction: row;
+}
+
+#list_id {
+  width: 10rem;
+  height: 3rem;
+  border: 2px solid #5bb1c2;
+}
+
+#open_list_btn {
+  width: 4rem;
+  height: 3rem;
 }
