@@ -79,14 +79,40 @@ Dominik               / '   /
                 placeholder="Enter a description"
               />
             </p>
-            <select name="colors" id="color_select" class="color_select">
+            <p id="pick_text">pick a color:</p>
+            <div class="color_select">
+
+              <div>
+                <input type="radio" name="color" id="color-red" />
+                <label class="color-box red" for="color-red"></label>
+              </div>
+
+              <div>
+                <input type="radio" name="color" id="color-green" />
+                <label class="color-box green" for="color-green"></label>
+              </div>
+
+              <div>
+                <input type="radio" name="color" id="color-yellow" />
+                <label class="color-box yellow" for="color-yellow"></label>
+              </div>
+
+              <div>
+                <input type="radio" name="color" id="color-blue" />
+                <label class="color-box blue" for="color-blue"></label>
+              </div>
+            </div>
+            <!--  <select name="colors" id="color_select" class="color_select">
               <option class="color_option" value="" disabled selected
                 >Please select a color</option
               >
-              <option class="color_option" value="red">red</option>
-              <option class="color_option" value="green">green</option>
-              <option class="color_option" value="yellow">yellow</option>
-            </select>
+              <div id="red_color">
+                <option class="color_option" value="red">red</option>
+              </div>
+                <option class="color_option" value="green">green</option>
+                <option class="color_option" value="yellow">yellow</option>
+            </select> -->
+
             <button>Submit</button>
           </form>
         </li>

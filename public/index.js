@@ -15,7 +15,10 @@ function request(url, method = "GET", data = null, headers = {}, options = {}) {
     options
   );
 
-  return fetch(url, options).then((res) => res.json());
+  return fetch(url, options).then((res) => {
+    console.log("<", res);
+    return res.json();
+  });
 }
 
 //Funktion um neue ToDos hinzuzufügen
@@ -31,6 +34,7 @@ function addTodo(title, description, color) {
 
   request(`${api_url}/t/${list_id}`, "post", new_todo).then((res) => {
     console.log(`Added todo item: ${res}`);
+    todo_list[res.id] = res;
     insertTodoItem(res);
   });
 }
@@ -38,15 +42,15 @@ function addTodo(title, description, color) {
 function todoOnSubmit(event) {
   const title = qs("#todo_input_title");
   const description = qs("#todo_input_description");
-  const color = qs("#color_select");
+  // const color = qs("#color_select");
 
   try {
     if (!title.value) return false;
-    addTodo(title.value, description.value, color.value);
+    addTodo(title.value, description.value, "red");
   } finally {
     title.value = "";
     description.value = "";
-    color.value = "";
+    // color.value = "";
     return false;
   }
 }
@@ -54,11 +58,13 @@ function todoOnSubmit(event) {
 function todoOnDone(event) {
   event.target.classList.toggle("checked");
   const id = event.target.attributes["data-todo-id"].value;
-  console.log("id:", id);
-  console.log(todo_list);
   const item = todo_list[id];
-
-  qs(`#todo-item-${id}`).remove();
+  request(`${api_url}/t/${list_id}/${id}`, "patch", {
+    todo_item: { done: true },
+  }).then((res) => {
+    qs(`#todo-item-${id}`).remove();
+    console.log("Marked as done:", res);
+  });
 }
 
 function insertTodoItem(item) {
@@ -84,7 +90,6 @@ function main() {
     if ("error" in res) return;
     const { todo_items } = res;
     Object.assign(todo_list, todo_items);
-
     // Schleife um Items in die Liste hinzuzufügen
     for (i in todo_items) {
       let item = todo_items[i];

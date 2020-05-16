@@ -91,14 +91,72 @@ input {
 }
 
 .color_select {
+  display: flex;
+
+  flex-direction: row;
+
+  margin: 5rem 0;
+
   width: 20rem;
+  height: 2rem;
+
   font-size: 1.6rem;
   border: 6px solid transparent;
 
   background-color: transparent;
 }
 
-.color_option {
+input[type="radio"] {
+  display: none;
+}
+
+.color-box {
+  display: block;
+
+  width: 3rem;
+  height: 3rem;
+
+  margin: 1rem;
+
+  border-top: 0.2rem solid rgba(255, 255, 255, 0.7);
+  border-left: 0.2rem solid rgba(255, 255, 255, 0.7);
+
+  border-right: 0.2rem solid rgba(150, 150, 150, 0.3);
+  border-bottom: 0.2rem solid rgba(150, 150, 150, 0.3);
+}
+
+input[type="radio"]:checked ~ .color-box {
+  /*box-shadow: 4px 4px 4px grey;*/
+
+  transform: scale(0.85);
+  filter: brightness(0.7);
+
+  border: none;
+  border-top: 0.1rem solid rgba(0, 0, 0, 0.1);
+  border-left: 0.1rem solid rgba(0, 0, 0, 0.1);
+  border-right: 0.1rem solid rgba(255, 255, 255, 255, 0.1);
+  border-bottom: 0.1rem solid rgba(255, 255, 255, 255, 0.1);
+}
+
+.color-box.red {
+  background-color: #c96059;
+}
+.color-box.green {
+  background-color: #71c45e;
+}
+.color-box.yellow {
+  background-color: #d4d259;
+}
+.color-box.blue {
+  background-color: #6dbacf;
+}
+
+#pick_text {
+  color: rgb(98 98 98);
+  font-size: 1.8rem;
+  position: relative;
+  left: 30px;
+  top: 40px;
 }
 
 .todo_done_button {
@@ -148,20 +206,19 @@ input {
   font-size: 1.8rem;
   color: #5bb1c2;
   position: relative;
-  bottom:50px;
+  bottom: 50px;
 }
 
 #enter_a_id {
   position: relative;
   left: 70px;
-
 }
 
 .input_btn {
   display: flex;
   flex-direction: row;
   position: relative;
-  bottom:50px;
+  bottom: 50px;
 }
 
 #list_id {
@@ -169,19 +226,18 @@ input {
   height: 3rem;
   border: 2px solid #5bb1c2;
   position: relative;
-  left:47px;
+  left: 47px;
 }
 
 .open_list_btn {
   width: 8rem;
   height: 3rem;
   position: relative;
-  left:45px;
-  bottom:3px;
-
+  left: 45px;
+  bottom: 3px;
 }
 
-#new_list_btn{
+#new_list_btn {
   position: relative;
   top: 135px;
   right: 90px;
@@ -192,7 +248,7 @@ input {
   transition: box-shadow 0.35s ease-in-out;
 }
 
-#new_list_btn:hover{
+#new_list_btn:hover {
   box-shadow: 1px 1px 5px 4px #9aa4a6;
   transition: box-shadow 0.35s ease-in-out;
 }
