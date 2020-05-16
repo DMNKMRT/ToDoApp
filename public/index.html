@@ -16,7 +16,7 @@
         /    \
        /      \
 
-                        .
+                         .
                         / \/\
 Dominik               / '   /
    Martin            <<     |
@@ -45,8 +45,10 @@ Dominik               / '   /
         <h2 id="enter_a_id">Enter a ID to open a list</h2>
       </div>
       <div class="input_btn">
-        <input type="text" id="list_id" placeholder="Enter id" />
-        <button id="open_list_btn">Open</button>
+        <form id="open_list_form" action="" onsubmit="return false;">
+          <input type="text" id="list_id" placeholder="Enter id" />
+          <button class="open_list_btn">Open</button>
+        </form>
         <button id="new_list_btn">New List</button>
       </div>
       <div class="start_text">
