@@ -1,5 +1,9 @@
 const qs = document.querySelector.bind(document);
 
+const copy_text_btn = qs("#copy_text");
+const open_list_form = qs("#open_list_form");
+const new_list_btn = qs("#new_list_btn");
+
 let api_url = "http://localhost:8080";
 let list_id;
 let todo_list = {};
@@ -97,19 +101,6 @@ function displayListId() {
   history.pushState({}, "", `/t/${list_id}`);
 }
 
-const copy_text_btn = qs("#copy_text");
-copy_text_btn.addEventListener("click", (e) => {
-  navigator.clipboard.writeText(list_id).then(() => {
-    const save_text = copy_text_btn.innerText;
-    copy_text_btn.innerText = "Copied!";
-    copy_text_btn.disabled = true;
-    setTimeout(() => {
-      copy_text_btn.innerText = save_text;
-      copy_text_btn.disabled = false;
-    }, 3000);
-  });
-});
-
 function main() {
   if (!list_id) return;
 
@@ -130,13 +121,25 @@ function main() {
   });
 }
 
-qs("#open_list_form").addEventListener("submit", (e) => {
+copy_text_btn.addEventListener("click", (e) => {
+  navigator.clipboard.writeText(list_id).then(() => {
+    const save_text = copy_text_btn.innerText;
+    copy_text_btn.innerText = "Copied!";
+    copy_text_btn.disabled = true;
+    setTimeout(() => {
+      copy_text_btn.innerText = save_text;
+      copy_text_btn.disabled = false;
+    }, 1000);
+  });
+});
+
+open_list_form.addEventListener("submit", (e) => {
   // TODO: Error handling
   list_id = qs("#list_id").value;
   main();
 });
 
-qs("#new_list_btn").addEventListener("click", (e) => {
+new_list_btn.addEventListener("click", (e) => {
   request(`${api_url}/api/new`).then((res) => {
     list_id = res;
     main();
