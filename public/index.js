@@ -32,7 +32,7 @@ function addTodo(title, description, color) {
     },
   };
 
-  request(`${api_url}/t/${list_id}`, "post", new_todo).then((res) => {
+  request(`${api_url}/api/${list_id}`, "post", new_todo).then((res) => {
     console.log(`Added todo item: ${res}`);
     todo_list[res.id] = res;
     insertTodoItem(res);
@@ -68,7 +68,7 @@ function todoOnDone(event) {
   event.target.classList.toggle("checked");
   const id = event.target.attributes["data-todo-id"].value;
   const item = todo_list[id];
-  request(`${api_url}/t/${list_id}/${id}`, "patch", {
+  request(`${api_url}/api/${list_id}/${id}`, "patch", {
     todo_item: { done: true },
   }).then((res) => {
     qs(`#todo-item-${id}`).remove();
@@ -92,10 +92,28 @@ function insertTodoItem(item) {
   );
 }
 
+function displayListId() {
+  qs("#list_id_output").textContent = list_id;
+  history.pushState({}, "", `/t/${list_id}`);
+}
+
+const copy_text_btn = qs("#copy_text");
+copy_text_btn.addEventListener("click", (e) => {
+  navigator.clipboard.writeText(list_id).then(() => {
+    const save_text = copy_text_btn.innerText;
+    copy_text_btn.innerText = "Copied!";
+    copy_text_btn.disabled = true;
+    setTimeout(() => {
+      copy_text_btn.innerText = save_text;
+      copy_text_btn.disabled = false;
+    }, 3000);
+  });
+});
+
 function main() {
   if (!list_id) return;
 
-  request(`${api_url}/t/${list_id}`).then((res) => {
+  request(`${api_url}/api/${list_id}`).then((res) => {
     if ("error" in res) return;
     const { todo_items } = res;
     Object.assign(todo_list, todo_items);
@@ -106,6 +124,7 @@ function main() {
       insertTodoItem(item);
     }
 
+    displayListId();
     qs("#start-page").classList.remove("page-active");
     qs("#todo-page").classList.add("page-active");
   });
@@ -118,7 +137,7 @@ qs("#open_list_form").addEventListener("submit", (e) => {
 });
 
 qs("#new_list_btn").addEventListener("click", (e) => {
-  request(`${api_url}/new`).then((res) => {
+  request(`${api_url}/api/new`).then((res) => {
     list_id = res;
     main();
   });

@@ -252,3 +252,12 @@ input[type="radio"]:checked ~ .color-box {
   box-shadow: 1px 1px 5px 4px #9aa4a6;
   transition: box-shadow 0.35s ease-in-out;
 }
+
+#list_id_output {
+  margin-left: 7rem;
+  font-size: 1.5rem;
+}
+
+#list_id_output::before {
+  content: "Your ID is: ";
+}
