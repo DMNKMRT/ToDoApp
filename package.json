@@ -23,7 +23,9 @@
   },
   "homepage": "https://github.com/erich0123/ToDoApp#readme",
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "cors": "^2.8.5",
