@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "debug": "nodemon",
+    "dev:node": "nodemon",
+    "dev:webpack": "webpack-dev-server --config webpack.dev.js",
+    "dev": "npm run dev:node & npm run dev:webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
