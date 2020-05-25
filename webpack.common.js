@@ -1,13 +1,19 @@
+const webpack = require("webpack");
 const path = require("path");
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlInlineCssWebpackPlugin = require("html-inline-css-webpack-plugin").default;
+
+const TerserJSPlugin = require("terser-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
   entry: ["./public/index.js", "./public/index.css"],
+  optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+  },
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
@@ -15,16 +21,13 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css",
-    }),
+    new MiniCssExtractPlugin({}),
     new HtmlWebpackPlugin({
       template: "public/index.html",
       inject: "head",
       scriptLoading: "defer",
     }),
-    new HtmlInlineCssWebpackPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
   module: {
     rules: [
