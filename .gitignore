@@ -1,4 +1,5 @@
 package-lock.json
 node_modules/
+dist/
 .atom-live-server.json
 .DS_Store
