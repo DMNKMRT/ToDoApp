@@ -1,6 +1,8 @@
 const path = require("path");
 
 const merge = require("webpack-merge");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
@@ -12,5 +14,21 @@ module.exports = merge(common, {
     proxy: {
       "/api": "http://localhost:3000",
     },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: true,
+            },
+          },
+          "css-loader",
+        ],
+      },
+    ],
   },
 });

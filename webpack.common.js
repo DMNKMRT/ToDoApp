@@ -35,16 +35,6 @@ module.exports = {
         test: /\.js$/,
         use: ["babel-loader"],
       },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: { hmr: true },
-          },
-          "css-loader",
-        ],
-      },
     ],
   },
 };
