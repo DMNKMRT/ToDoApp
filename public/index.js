@@ -8,7 +8,7 @@ const open_list_form = qs("#open_list_form");
 const new_list_btn = qs("#new_list_btn");
 const todo_form = qs("#todo_form");
 
-let api_url = "http://localhost:8080";
+let api_url = `${location.protocol}//${location.host}`;
 let list_id;
 let todo_list = {};
 
