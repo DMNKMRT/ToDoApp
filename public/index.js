@@ -35,14 +35,12 @@ function todoOnSubmit(event) {
   const description = qs("#todo_input_description");
   let color = "";
 
-  for (let item in qsa('input[name="color"]')) {
+  for (let item of qsa('input[name="color"]')) {
     if (item.checked) {
       color = item.value;
-      return;
+      break;
     }
   }
-
-  console.log("Color:", color);
 
   try {
     if (!title.value) return false;
