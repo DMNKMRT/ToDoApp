@@ -11,7 +11,7 @@ let api_url = "http://localhost:8080";
 let list_id;
 let todo_list = {};
 
-//Funktion um neue ToDos hinzuzufügen
+// Funktion um neue ToDos hinzuzufügen
 function addTodo(title, description, color) {
   const new_todo = {
     todo_item: {
