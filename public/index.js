@@ -1,3 +1,5 @@
+import request from "./utils/request.js";
+
 const qs = document.querySelector.bind(document);
 
 const copy_text_btn = qs("#copy_text");
@@ -7,23 +9,6 @@ const new_list_btn = qs("#new_list_btn");
 let api_url = "http://localhost:8080";
 let list_id;
 let todo_list = {};
-
-function request(url, method = "GET", data = null, headers = {}, options = {}) {
-  headers = Object.assign({ "Content-Type": "application/json" }, headers);
-  options = Object.assign(
-    {
-      method: method.toUpperCase(),
-      headers: headers,
-    },
-    data ? { body: JSON.stringify(data) } : {},
-    options
-  );
-
-  return fetch(url, options).then((res) => {
-    console.log("<", res);
-    return res.json();
-  });
-}
 
 //Funktion um neue ToDos hinzuzufügen
 function addTodo(title, description, color) {
