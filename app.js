@@ -31,7 +31,7 @@ function validate_todo_id(req, res, next) {
 app.get("/api/new", (req, res) => {
   const list_id = utils.generateId();
   todo_lists[list_id] = { todo_items: {}, next_id: 0 };
-  res.json(list_id);
+    res.json({list_id: list_id});
 });
 
 app

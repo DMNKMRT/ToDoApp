@@ -1,4 +1,4 @@
-import request from "./utils/request.js";
+import TodoApi from "./utils/todo_api.js";
 
 const qs = document.querySelector.bind(document);
 const qsa = document.querySelectorAll.bind(document);
@@ -8,25 +8,23 @@ const open_list_form = qs("#open_list_form");
 const new_list_btn = qs("#new_list_btn");
 const todo_form = qs("#todo_form");
 
-let api_url = `${location.protocol}//${location.host}`;
-let list_id;
 let todo_list = {};
+
+const todo_api = new TodoApi();
 
 // Funktion um neue ToDos hinzuzufügen
 function addTodo(title, description, color) {
-  const new_todo = {
-    todo_item: {
-      title: title,
-      description: description,
-      color: color,
-      done: false,
-    },
+  const item = {
+    title: title,
+    description: description,
+    color: color,
+    done: false,
   };
 
-  request(`${api_url}/api/${list_id}`, "post", new_todo).then((res) => {
-    console.log(`Added todo item: ${res}`);
-    todo_list[res.id] = res;
-    insertTodoItem(res);
+  todo_api.addItem(item).then((new_item) => {
+    console.log(`Added todo item: ${new_item}`);
+    todo_list[new_item.id] = new_item;
+    insertTodoItem(new_item);
   });
 }
 
@@ -57,11 +55,9 @@ function todoOnDone(event) {
   event.target.classList.toggle("checked");
   const id = event.target.attributes["data-todo-id"].value;
   const item = todo_list[id];
-  request(`${api_url}/api/${list_id}/${id}`, "patch", {
-    todo_item: { done: true },
-  }).then((res) => {
+  todo_api.markAsDone(id).then((new_item) => {
     qs(`#todo-item-${id}`).remove();
-    console.log("Marked as done:", res);
+    console.log("Marked as done:", new_item);
   });
 }
 
@@ -82,20 +78,17 @@ function insertTodoItem(item) {
 }
 
 function displayListId() {
-  qs("#list_id_output").textContent = list_id;
-  history.pushState({}, "", `/t/${list_id}`);
+  qs("#list_id_output").textContent = todo_api.list_id;
 }
 
 function main() {
-  if (!list_id) return;
+  if (!todo_api.list_id) return;
 
-  request(`${api_url}/api/${list_id}`).then((res) => {
-    if ("error" in res) return;
-    const { todo_items } = res;
-    Object.assign(todo_list, todo_items);
+  todo_api.getItems().then((items) => {
+    Object.assign(todo_list, items);
     // Schleife um Items in die Liste hinzuzufügen
-    for (i in todo_items) {
-      let item = todo_items[i];
+    for (i in items) {
+      let item = items[i];
       if (item.done) continue;
       insertTodoItem(item);
     }
@@ -107,7 +100,7 @@ function main() {
 }
 
 copy_text_btn.addEventListener("click", (e) => {
-  navigator.clipboard.writeText(list_id).then(() => {
+  navigator.clipboard.writeText(todo_api.list_id).then(() => {
     const save_text = copy_text_btn.innerText;
     copy_text_btn.innerText = "Copied!";
     copy_text_btn.disabled = true;
@@ -119,14 +112,13 @@ copy_text_btn.addEventListener("click", (e) => {
 });
 
 open_list_form.addEventListener("submit", (e) => {
-  // TODO: Error handling
-  list_id = qs("#list_id").value;
+  todo_api.setListId(qs("#list_id").value);
   main();
 });
 
 new_list_btn.addEventListener("click", (e) => {
-  request(`${api_url}/api/new`).then((res) => {
-    list_id = res;
+  todo_api.newList().then((id) => {
+    todo_api.setListId(id);
     main();
   });
 });
