@@ -5,6 +5,7 @@ const qs = document.querySelector.bind(document);
 const copy_text_btn = qs("#copy_text");
 const open_list_form = qs("#open_list_form");
 const new_list_btn = qs("#new_list_btn");
+const todo_form = qs("#todo_form");
 
 let api_url = "http://localhost:8080";
 let list_id;
@@ -72,13 +73,13 @@ function insertTodoItem(item) {
     <li class="todo_item ${item.color}" id="todo-item-${item.id}">
       <h1 class="todo_item_title">
         ${item.title}
-        <button data-todo-id="${item.id}" class="todo_done_button"
-        onclick="return todoOnDone(event);"></button>
+        <button data-todo-id="${item.id}" class="todo_done_button"></button>
       </h1>
       <p class="todo_item_description">${item.description}</p>
     </li>
     `
   );
+  qs(`[data-todo-id="${item.id}"`).addEventListener("click", todoOnDone);
 }
 
 function displayListId() {
@@ -130,5 +131,7 @@ new_list_btn.addEventListener("click", (e) => {
     main();
   });
 });
+
+todo_form.addEventListener("submit", todoOnSubmit);
 
 if (module.hot) module.hot.accept();
