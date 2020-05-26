@@ -1,6 +1,7 @@
 import request from "./utils/request.js";
 
 const qs = document.querySelector.bind(document);
+const qsa = document.querySelectorAll.bind(document);
 
 const copy_text_btn = qs("#copy_text");
 const open_list_form = qs("#open_list_form");
@@ -34,12 +35,12 @@ function todoOnSubmit(event) {
   const description = qs("#todo_input_description");
   let color = "";
 
-  document.querySelectorAll('input[name="color"]').forEach((item, i) => {
+  for (let item in qsa('input[name="color"]')) {
     if (item.checked) {
       color = item.value;
       return;
     }
-  });
+  }
 
   console.log("Color:", color);
 
