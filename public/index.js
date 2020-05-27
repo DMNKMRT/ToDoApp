@@ -145,3 +145,5 @@ new_list_btn.addEventListener("click", (e) => {
     main();
   });
 });
+
+if (module.hot) module.hot.accept();
