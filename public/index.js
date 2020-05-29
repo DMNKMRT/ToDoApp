@@ -1,5 +1,7 @@
 /* global module */
 
+import "typeface-roboto";
+
 import TodoApi from "./utils/todo_api.js";
 import Router from "./utils/router.js";
 
