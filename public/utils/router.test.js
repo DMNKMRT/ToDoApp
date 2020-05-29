@@ -93,3 +93,19 @@ test("load non-existing route: /path/to/void", () => {
   router.load("/path/to/void");
   expect(container.innerHTML).toEqual("<h1>404 Not Found.</h1>");
 });
+
+test("custom error page", () => {
+  const errMsg = "the page was not found";
+
+  const render = () => {
+    const errorPage = document.createElement("div");
+    errorPage.innerHTML = errMsg;
+    return errorPage;
+  };
+
+  router.setError(render);
+  router.load("/path/to/void");
+
+  expect(container.querySelector("div").textContent).toEqual(errMsg);
+  expect(container.querySelector("div").textContent).not.toEqual("something");
+});

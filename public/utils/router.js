@@ -1,9 +1,16 @@
 import pathToRegex from "./path-to-regex.js";
 
+function defaultErrorPage() {
+  const element = document.createElement("h1");
+  element.innerHTML = "404 Not Found.";
+  return element;
+}
+
 export default class Router {
   constructor(container) {
     this.routes = {};
     this.container = container;
+    this.errorPage = defaultErrorPage;
 
     window.onpopstate = () => this.load(location.pathname);
 
@@ -36,12 +43,17 @@ export default class Router {
     }
 
     const { routeObj, args } = route;
-    this.container.innerHTML = "";
-    this.container.appendChild(routeObj.render(args));
+    this._setElement(routeObj.render(args));
   }
   error() {
-    // TODO: better error page
-    this.container.innerHTML = "<h1>404 Not Found.</h1>";
+    this._setElement(this.errorPage());
+  }
+  setError(element) {
+    this.errorPage = element;
+  }
+  _setElement(element) {
+    this.container.innerHTML = "";
+    this.container.appendChild(element);
   }
   _getArgs(routeObj, match) {
     const values = [...match].slice(1);
