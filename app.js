@@ -71,4 +71,5 @@ app.patch(
   }
 );
 
+log("Listening on port", port);
 app.listen(port);
