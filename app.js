@@ -1,13 +1,20 @@
+const path = require("path");
+
 const express = require("express");
 const cors = require("cors");
+const history = require("connect-history-api-fallback");
+
 const utils = require("./utils.js");
 const status = require("./status_codes.js");
 
 const log = console.log.bind();
 
+const port = process.env.PORT || 3000;
+
 const app = express();
 
-app.use(express.static("public"));
+app.use(history({ htmlAcceptHeaders: ["text/html", "application/xhtml+xml"] }));
+app.use(express.static(path.resolve(__dirname, "dist")));
 app.use(cors());
 app.use(express.json());
 
@@ -25,13 +32,12 @@ function validate_todo_id(req, res, next) {
   if (!(todo_id in todo_lists[list_id].todo_items))
     return res.status(404).send(status.item_not_found);
   next();
-
 }
 
 app.get("/api/new", (req, res) => {
   const list_id = utils.generateId();
   todo_lists[list_id] = { todo_items: {}, next_id: 0 };
-    res.json({list_id: list_id});
+  res.json({ list_id: list_id });
 });
 
 app
@@ -65,4 +71,4 @@ app.patch(
   }
 );
 
-app.listen(3000);
+app.listen(port);
