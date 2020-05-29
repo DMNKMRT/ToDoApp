@@ -114,7 +114,7 @@ function main(container, id) {
 
 export default function render(args) {
   console.log(args);
-  const element = document.createElement("html");
+  const element = document.createElement("div");
   element.innerHTML = html;
   main(element, args.id);
   return element;

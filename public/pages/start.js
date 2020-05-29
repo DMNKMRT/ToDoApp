@@ -24,7 +24,7 @@ function main(container) {
 }
 
 export default function render() {
-  const element = document.createElement("html");
+  const element = document.createElement("div");
   element.innerHTML = html;
   main(element);
   return element;
