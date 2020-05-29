@@ -92,8 +92,9 @@ function main(container, id) {
   todo_form.addEventListener("submit", todoOnSubmit);
 
   async function updateItems() {
+    let items;
     try {
-      const items = await todo_api.getItems();
+      items = await todo_api.getItems();
     } catch (err) {
       router.error();
     }
