@@ -4,7 +4,7 @@ function main(container, id) {
   const qs = container.querySelector.bind(container);
   const qsa = container.querySelectorAll.bind(container);
 
-  const { todo_api } = window;
+  const { todo_api, router } = window;
   const todo_list = {};
 
   const copy_text_btn = qs("#copy_text");
@@ -92,7 +92,12 @@ function main(container, id) {
   todo_form.addEventListener("submit", todoOnSubmit);
 
   async function updateItems() {
-    const items = await todo_api.getItems();
+    try {
+      const items = await todo_api.getItems();
+    } catch (err) {
+      router.error();
+    }
+
     Object.assign(todo_list, items);
 
     // Schleife um Items in die Liste hinzuzufügen
