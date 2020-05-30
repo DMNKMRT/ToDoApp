@@ -15,8 +15,8 @@ const node_env = process.env.NODE_ENV;
 
 const app = express();
 
-app.use(cors());
 if (node_env == "production") app.use(httpsRedirectMiddleware());
+app.use(cors());
 app.use(history({ htmlAcceptHeaders: ["text/html", "application/xhtml+xml"] }));
 app.use(express.static(path.resolve(__dirname, "dist")));
 app.use(express.json());
