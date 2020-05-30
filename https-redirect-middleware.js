@@ -1,7 +1,7 @@
 function httpsRedirectMiddleware() {
   return (req, res, next) => {
-    if (!req.secure)
-      res.redirect("https://" + req.headers.host + req.url);
+    const isSecure = req.secure || req.headers["X-Forwarded-Proto"] == "https";
+    if (!isSecure) res.redirect("https://" + req.headers.host + req.url);
     else next();
   };
 }
