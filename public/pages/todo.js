@@ -24,7 +24,6 @@ function main(container, id) {
     todo_api.addItem(item).then((new_item) => {
       console.log(`Added todo item: ${new_item}`);
       todo_items[new_item.id] = new_item;
-      insertTodoItem(new_item);
     });
   }
 
@@ -108,6 +107,9 @@ function main(container, id) {
     todo_api.setListId(id);
     displayListId();
     updateItems();
+    todo_api.subscribe((todo_item) => {
+      insertTodoItem(todo_item);
+    });
   }
 
   init();
