@@ -6,16 +6,19 @@ const history = require("connect-history-api-fallback");
 
 const utils = require("./utils.js");
 const status = require("./status_codes.js");
+const httpsRedirectMiddleware = require("./https-redirect-middleware.js");
 
 const log = console.log.bind();
 
 const port = process.env.PORT || 3000;
+const node_env = process.env.NODE_ENV;
 
 const app = express();
 
+app.use(cors());
+if (node_env == "production") app.use(httpsRedirectMiddleware());
 app.use(history({ htmlAcceptHeaders: ["text/html", "application/xhtml+xml"] }));
 app.use(express.static(path.resolve(__dirname, "dist")));
-app.use(cors());
 app.use(express.json());
 
 const todo_lists = {};
