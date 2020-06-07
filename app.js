@@ -7,6 +7,7 @@ const history = require("connect-history-api-fallback");
 const utils = require("./utils.js");
 const status = require("./status_codes.js");
 const httpsRedirectMiddleware = require("./https-redirect-middleware.js");
+const { sseMiddleware, sseSend } = require("./sse.js");
 
 const log = console.log.bind();
 
@@ -22,6 +23,7 @@ app.use(express.static(path.resolve(__dirname, "dist")));
 app.use(express.json());
 
 const todo_lists = {};
+const subscribers = {};
 
 function validate_list_id(req, res, next) {
   const { list_id } = req.params;
@@ -37,10 +39,21 @@ function validate_todo_id(req, res, next) {
   next();
 }
 
+function sendNewTodo(list_id, todo_item) {
+  for (let res of subscribers[list_id])
+    sseSend(res, "new-todo", { todo_item: todo_item });
+}
+
 app.get("/api/new", (req, res) => {
   const list_id = utils.generateId();
   todo_lists[list_id] = { todo_items: {}, next_id: 0 };
   res.json({ list_id: list_id });
+});
+
+app.get("/api/subscribe/:list_id", sseMiddleware, (req, res) => {
+  const { list_id } = req.params;
+  if (!subscribers[list_id]) subscribers[list_id] = [];
+  subscribers[list_id].push(res);
 });
 
 app
@@ -59,6 +72,9 @@ app
     const item_id = todo_lists[list_id]["next_id"]++;
     todo_item["id"] = item_id;
     todo_lists[list_id].todo_items[item_id] = todo_item;
+
+    sendNewTodo(list_id, todo_item);
+
     res.json(todo_item);
   });
 

@@ -27,6 +27,13 @@ export default class TodoApi {
     const data = { todo_item: item };
     return this._request(`${api_url}/api/${this.list_id}`, "post", data);
   }
+  subscribe(callback) {
+    const evtSource = new EventSource(`/api/subscribe/${this.list_id}`);
+    evtSource.addEventListener("new-todo", (e) => {
+      const { todo_item } = JSON.parse(e.data);
+      callback(todo_item);
+    });
+  }
   _request(...args) {
     return request(...args).then((res) => {
       if ("error" in res) throw Error(res.error);

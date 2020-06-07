@@ -1,14 +1,16 @@
 import html from "./todo.html";
+import TodoItem from "../components/todo-item.js";
 
 function main(container, id) {
   const qs = container.querySelector.bind(container);
   const qsa = container.querySelectorAll.bind(container);
 
   const { todo_api, router } = window;
-  const todo_list = {};
+  const todo_items = {};
 
   const copy_text_btn = qs("#copy_text");
   const todo_form = qs("#todo_form");
+  const todo_list = qs("#todo_list");
 
   // Funktion um neue ToDos hinzuzufügen
   function addTodo(title, description, color) {
@@ -21,8 +23,7 @@ function main(container, id) {
 
     todo_api.addItem(item).then((new_item) => {
       console.log(`Added todo item: ${new_item}`);
-      todo_list[new_item.id] = new_item;
-      insertTodoItem(new_item);
+      todo_items[new_item.id] = new_item;
     });
   }
 
@@ -58,18 +59,11 @@ function main(container, id) {
   }
 
   function insertTodoItem(item) {
-    qs("#todo_list").insertAdjacentHTML(
-      "afterbegin",
-      `
-    <li class="todo_item ${item.color}" id="todo-item-${item.id}">
-      <h1 class="todo_item_title">
-        ${item.title}
-        <button data-todo-id="${item.id}" class="todo_done_button"></button>
-      </h1>
-      <p class="todo_item_description">${item.description}</p>
-    </li>
-    `
+    const el = todo_list.insertBefore(
+      TodoItem(item),
+      todo_list.lastElementChild
     );
+    console.log(el.innerText);
     qs(`[data-todo-id="${item.id}"`).addEventListener("click", todoOnDone);
   }
 
@@ -99,7 +93,7 @@ function main(container, id) {
       router.error();
     }
 
-    Object.assign(todo_list, items);
+    Object.assign(todo_items, items);
 
     // Schleife um Items in die Liste hinzuzufügen
     for (let i in items) {
@@ -113,6 +107,9 @@ function main(container, id) {
     todo_api.setListId(id);
     displayListId();
     updateItems();
+    todo_api.subscribe((todo_item) => {
+      insertTodoItem(todo_item);
+    });
   }
 
   init();
