@@ -23,7 +23,6 @@ function main(container, id) {
 
     todo_api.addItem(item).then((new_item) => {
       console.log(`Added todo item: ${new_item}`);
-      todo_items[new_item.id] = new_item;
     });
   }
 
@@ -53,18 +52,26 @@ function main(container, id) {
     event.target.classList.toggle("checked");
     const id = event.target.attributes["data-todo-id"].value;
     todo_api.markAsDone(id).then((new_item) => {
-      qs(`#todo-item-${id}`).remove();
       console.log("Marked as done:", new_item);
     });
   }
 
   function insertTodoItem(item) {
-    const el = todo_list.insertBefore(
-      TodoItem(item),
-      todo_list.lastElementChild
-    );
-    console.log(el.innerText);
-    qs(`[data-todo-id="${item.id}"`).addEventListener("click", todoOnDone);
+    let old_item = todo_items[item.id];
+    let new_item;
+
+    if (old_item && item.done) {
+      todo_list.removeChild(old_item);
+      delete todo_items[item.id];
+    } else {
+      new_item = TodoItem(item);
+      new_item.addEventListener("click", todoOnDone);
+      todo_items[item.id] = new_item;
+
+      if (old_item) todo_list.replaceChild(new_item, old_item);
+      else
+        todo_list.insertBefore(new_item, todo_list.lastElementChild);
+    }
   }
 
   function displayListId() {
@@ -92,8 +99,6 @@ function main(container, id) {
     } catch (err) {
       router.error();
     }
-
-    Object.assign(todo_items, items);
 
     // Schleife um Items in die Liste hinzuzufügen
     for (let i in items) {
