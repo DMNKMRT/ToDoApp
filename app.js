@@ -86,6 +86,9 @@ app.patch(
     const { list_id, todo_id } = req.params;
     const item = todo_lists[list_id].todo_items[todo_id];
     Object.assign(item, req.body.todo_item);
+
+    sendNewTodo(list_id, item);
+
     res.json(item);
   }
 );
