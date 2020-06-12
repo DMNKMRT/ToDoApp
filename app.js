@@ -15,8 +15,7 @@ const log = console.log.bind();
 
 const port = process.env.PORT || 3000;
 const node_env = process.env.NODE_ENV;
-const DB_HOST = process.env.DB_HOST || "localhost:27017";
-const DB_NAME = process.env.DB_NAME || "todo";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/todo";
 const MONGOOSE_OPTS = { useNewUrlParser: true, useUnifiedTopology: true };
 
 const app = express();
@@ -95,6 +94,6 @@ app.patch("/api/:list_id/:todo_id", get_todo_list, async (req, res) => {
   res.json(new_item);
 });
 
-mongoose.connect(`mongodb://${DB_HOST}/${DB_NAME}`, MONGOOSE_OPTS);
+mongoose.connect(MONGODB_URI, MONGOOSE_OPTS);
 log("Listening on port", port);
 app.listen(port);
