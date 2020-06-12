@@ -3,16 +3,21 @@ const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const history = require("connect-history-api-fallback");
+const mongoose = require("mongoose");
 
 const utils = require("./utils.js");
 const status = require("./status_codes.js");
 const httpsRedirectMiddleware = require("./https-redirect-middleware.js");
 const { sseMiddleware, sseSend } = require("./sse.js");
+const { TodoList, TodoItem } = require("./models/todo.js");
 
 const log = console.log.bind();
 
 const port = process.env.PORT || 3000;
 const node_env = process.env.NODE_ENV;
+const DB_HOST = process.env.DB_HOST || "localhost:27017";
+const DB_NAME = process.env.DB_NAME || "todo";
+const MONGOOSE_OPTS = { useNewUrlParser: true, useUnifiedTopology: true };
 
 const app = express();
 
@@ -22,20 +27,17 @@ app.use(history({ htmlAcceptHeaders: ["text/html", "application/xhtml+xml"] }));
 app.use(express.static(path.resolve(__dirname, "dist")));
 app.use(express.json());
 
-const todo_lists = {};
 const subscribers = {};
 
-function validate_list_id(req, res, next) {
+async function get_todo_list(req, res, next) {
   const { list_id } = req.params;
-  if (!(list_id in todo_lists))
-    return res.status(404).send(status.list_not_found);
-  next();
-}
 
-function validate_todo_id(req, res, next) {
-  const { list_id, todo_id } = req.params;
-  if (!(todo_id in todo_lists[list_id].todo_items))
-    return res.status(404).send(status.item_not_found);
+  const todo_list = await TodoList.findOne({ public_id: list_id });
+
+  if (!todo_list) return res.status(404).send(status.list_not_found);
+
+  req.todo_list = todo_list;
+
   next();
 }
 
@@ -45,9 +47,10 @@ function sendNewTodo(list_id, todo_item) {
 }
 
 app.get("/api/new", (req, res) => {
-  const list_id = utils.generateId();
-  todo_lists[list_id] = { todo_items: {}, next_id: 0 };
-  res.json({ list_id: list_id });
+  const todo_list = new TodoList();
+  todo_list.save();
+
+  res.json({ list_id: todo_list.public_id });
 });
 
 app.get("/api/subscribe/:list_id", sseMiddleware, (req, res) => {
@@ -58,40 +61,40 @@ app.get("/api/subscribe/:list_id", sseMiddleware, (req, res) => {
 
 app
   .route("/api/:list_id")
-  .get(validate_list_id, (req, res) => {
+  .get(get_todo_list, async (req, res) => {
     // Returns the todo list at :list_id
-    const { list_id } = req.params;
-
-    res.json(todo_lists[list_id]);
+    res.json(req.todo_list);
   })
-  .post(validate_list_id, (req, res) => {
+  .post(get_todo_list, async (req, res) => {
     // Create a new todo item in list :list_id, returns the new todo item
     const { list_id } = req.params;
     const { todo_item } = req.body;
+    const { todo_list } = req;
 
-    const item_id = todo_lists[list_id]["next_id"]++;
-    todo_item["id"] = item_id;
-    todo_lists[list_id].todo_items[item_id] = todo_item;
+    todo_item.public_id = todo_list.todo_items.length;
+
+    todo_list.todo_items.push(todo_item);
+    todo_list.save();
 
     sendNewTodo(list_id, todo_item);
 
     res.json(todo_item);
   });
 
-app.patch(
-  "/api/:list_id/:todo_id",
-  validate_list_id,
-  validate_todo_id,
-  (req, res) => {
-    const { list_id, todo_id } = req.params;
-    const item = todo_lists[list_id].todo_items[todo_id];
-    Object.assign(item, req.body.todo_item);
+app.patch("/api/:list_id/:todo_id", get_todo_list, async (req, res) => {
+  const { list_id, todo_id } = req.params;
+  const { todo_item } = req.body;
+  const { todo_list } = req;
+  const { todo_items } = todo_list;
 
-    sendNewTodo(list_id, item);
+  const new_item = Object.assign(todo_items[todo_id], todo_item);
+  todo_list.save();
 
-    res.json(item);
-  }
-);
+  sendNewTodo(list_id, new_item);
 
+  res.json(new_item);
+});
+
+mongoose.connect(`mongodb://${DB_HOST}/${DB_NAME}`, MONGOOSE_OPTS);
 log("Listening on port", port);
 app.listen(port);

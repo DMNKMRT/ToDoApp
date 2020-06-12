@@ -22,7 +22,7 @@ function main(container, id) {
     };
 
     todo_api.addItem(item).then((new_item) => {
-      console.log(`Added todo item: ${new_item}`);
+      console.log("Added todo item:", new_item);
     });
   }
 
@@ -57,20 +57,19 @@ function main(container, id) {
   }
 
   function insertTodoItem(item) {
-    let old_item = todo_items[item.id];
+    let old_item = todo_items[item.public_id];
     let new_item;
 
     if (old_item && item.done) {
       todo_list.removeChild(old_item);
-      delete todo_items[item.id];
+      delete todo_items[item.public_id];
     } else {
       new_item = TodoItem(item);
       new_item.addEventListener("click", todoOnDone);
-      todo_items[item.id] = new_item;
+      todo_items[item.public_id] = new_item;
 
       if (old_item) todo_list.replaceChild(new_item, old_item);
-      else
-        todo_list.insertBefore(new_item, todo_list.lastElementChild);
+      else todo_list.insertBefore(new_item, todo_list.lastElementChild);
     }
   }
 
