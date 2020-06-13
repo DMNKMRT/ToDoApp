@@ -22,9 +22,13 @@ module.exports = {
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({}),
     new HtmlWebpackPlugin({
-      template: "public/index.html",
+      template: "public/index.html.ejs",
       inject: "head",
       scriptLoading: "defer",
+      title: process.env.TITLE || "ToDo-App",
+      meta: {
+        description: process.env.DESCRIPTION,
+      },
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ],
@@ -41,7 +45,7 @@ module.exports = {
       {
         test: /\.woff2?$/,
         use: ["file-loader"],
-      }
+      },
     ],
   },
 };
