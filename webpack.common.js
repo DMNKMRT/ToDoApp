@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   entry: ["./public/index.js", "./public/index.css"],
@@ -31,6 +32,24 @@ module.exports = {
       },
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
+    new CompressionPlugin({
+      filename: "[path].br[query]",
+      algorithm: "brotliCompress",
+      test: /\.(js|css|html|svg)$/,
+      compressionOptions: { level: 11 },
+    }),
+    new CompressionPlugin({
+      filename: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.(js|css|html|svg)$/,
+      compressionOptions: { level: 9 },
+    }),
+    new CompressionPlugin({
+      filename: "[path].zz[query]",
+      algorithm: "deflate",
+      test: /\.(js|css|html|svg)$/,
+      compressionOptions: { level: 9 },
+    }),
   ],
   module: {
     rules: [

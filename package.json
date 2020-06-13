@@ -15,10 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/erich0123/ToDoApp.git"
   },
-  "keywords": [
-    "todo",
-    "api"
-  ],
+  "keywords": ["todo", "api"],
   "author": "Erich Schneider",
   "license": "ISC",
   "bugs": {
@@ -32,6 +29,7 @@
     "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
+    "compression-webpack-plugin": "^4.0.0",
     "css-loader": "^3.5.3",
     "eslint": "^7.1.0",
     "eslint-plugin-jest": "^23.13.2",
@@ -51,7 +49,9 @@
     "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-static-gzip": "^2.0.6",
     "mongoose": "^5.9.18",
+    "pre-compressed-assets": "^2.1.1",
     "typeface-roboto": "0.0.75"
   }
 }
