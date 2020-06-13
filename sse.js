@@ -5,6 +5,7 @@ function sseMiddleware(req, res, next) {
     "content-type": "text/event-stream",
   });
   setInterval(() => ping(res), 30000);
+  ping(res);
   next();
 }
 
