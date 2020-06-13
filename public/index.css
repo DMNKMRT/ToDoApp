@@ -7,9 +7,7 @@ html {
   box-sizing: border-box;
 }
 
-*,
-::before,
-::after {
+*, ::before, ::after {
   box-sizing: inherit;
 }
 
@@ -142,11 +140,6 @@ input[type="radio"] {
   border-bottom: 0.2rem solid rgba(150, 150, 150, 0.3);
 }
 
-.color-box > * {
-  /* hide label text */
-  visibility: hidden;
-}
-
 input[type="radio"]:checked ~ .color-box {
   /*box-shadow: 4px 4px 4px grey;*/
 
@@ -243,14 +236,6 @@ input[type="radio"]:checked ~ .color-box {
   bottom: 50px;
 }
 
-.input_btn_label {
-  visibility: hidden;
-}
-
-.todo_input_label {
-  visibility: hidden;
-}
-
 #list_id {
   width: 10rem;
   height: 3rem;
@@ -294,7 +279,7 @@ input[type="radio"]:checked ~ .color-box {
   content: "Your ID is: ";
 }
 
-#copy_text {
+#copy_text{
   margin-left: 0.3rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
