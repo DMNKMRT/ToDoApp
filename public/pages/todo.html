@@ -8,6 +8,9 @@
     <li class="todo_item">
       <form id="todo_form" action="" onsubmit="return false;">
         <h1 class="todo_item_title">
+          <label class="todo_input_label" for="todo_input_title"
+            >Todo item title</label
+          >
           <input
             type="text"
             class="todo_input_title"
@@ -17,6 +20,9 @@
           />
         </h1>
         <p class="todo_item_description">
+          <label class="todo_input_label" for="todo_input_description"
+            >Todo item description</label
+          >
           <input
             type="text"
             class="todo_input_description"
@@ -27,19 +33,26 @@
         </p>
         <p id="pick_text">pick a color:</p>
         <div id="color_select" class="color_select">
+          <label class="todo_input_label" for="color">Todo item color</label>
           <div>
             <input type="radio" name="color" id="color-red" value="red" />
-            <label class="color-box red" for="color-red"></label>
+            <label class="color-box red" for="color-red"
+              ><span>red</span></label
+            >
           </div>
 
           <div>
             <input type="radio" name="color" id="color-green" value="green" />
-            <label class="color-box green" for="color-green"></label>
+            <label class="color-box green" for="color-green"
+              ><span>green</span></label
+            >
           </div>
 
           <div>
             <input type="radio" name="color" id="color-yellow" value="yellow" />
-            <label class="color-box yellow" for="color-yellow"></label>
+            <label class="color-box yellow" for="color-yellow"
+              ><span>yellow</span></label
+            >
           </div>
 
           <div>
@@ -50,7 +63,9 @@
               value="blue"
               checked
             />
-            <label class="color-box blue" for="color-blue"></label>
+            <label class="color-box blue" for="color-blue"
+              ><span>blue</span></label
+            >
           </div>
         </div>
 
