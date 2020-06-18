@@ -34,6 +34,15 @@ app.use(
       },
     ],
     orderPreference: ["br"],
+    etag: false,
+    lastModified: false,
+    setHeaders: (res, path) => {
+      if (/\.html(\.(br|gz|zz))?$/.test(path)) {
+        res.setHeader("Cache-Control", "no-cache");
+      } else {
+        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      }
+    },
   })
 );
 app.use(express.json());
