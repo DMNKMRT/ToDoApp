@@ -23,15 +23,15 @@ module.exports = (mode) => ({
         ? "[name].[contenthash:8].bundle.js"
         : "[name].bundle.js",
     chunkFilename:
-      mode === "production" ? "[id].[contenthash:8].js" : "[id].js",
+      mode === "production" ? "[id].[contenthash:8].chunk.js" : "[id].chunk.js",
   },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename:
-        mode === "production" ? "[name].[contenthash:8].css" : "[name].css",
+        mode === "production" ? "[name].[contenthash:8].bundle.css" : "[name].bundle.css",
       chunkFilename:
-        mode === "production" ? "[id].[contenthash:8].css" : "[id].css",
+        mode === "production" ? "[id].[contenthash:8].chunk.css" : "[id].chunk.css",
     }),
     new HtmlWebpackPlugin({
       template: "public/index.html.ejs",
