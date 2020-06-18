@@ -9,19 +9,29 @@ const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 
-module.exports = {
+module.exports = (mode) => ({
   entry: ["./public/index.js", "./public/index.css"],
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
   output: {
-    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
     publicPath: "/",
+    filename:
+      mode === "production"
+        ? "[name].[contenthash:8].bundle.js"
+        : "[name].bundle.js",
+    chunkFilename:
+      mode === "production" ? "[id].[contenthash:8].js" : "[id].js",
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({}),
+    new MiniCssExtractPlugin({
+      filename:
+        mode === "production" ? "[name].[contenthash:8].css" : "[name].css",
+      chunkFilename:
+        mode === "production" ? "[id].[contenthash:8].css" : "[id].css",
+    }),
     new HtmlWebpackPlugin({
       template: "public/index.html.ejs",
       inject: "head",
@@ -63,8 +73,13 @@ module.exports = {
       },
       {
         test: /\.woff2?$/,
-        use: ["file-loader"],
+        use: [
+          {
+            loader: "file-loader",
+            options: { name: "[contenthash:8].[ext]" },
+          },
+        ],
       },
     ],
   },
-};
+});
