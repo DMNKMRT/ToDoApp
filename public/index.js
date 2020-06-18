@@ -13,7 +13,7 @@ if (typeof module != "undefined" && module.hot) module.hot.accept();
 
 const root = document.querySelector("#root");
 
-window.todo_api = new TodoApi();
+window.todo_api = new TodoApi(API_URL, null);
 const router = (window.router = new Router(root));
 
 router.add("/", StartPage);

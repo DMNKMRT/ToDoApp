@@ -64,6 +64,9 @@ module.exports = (mode) => ({
     new CopyWebpackPlugin({
       patterns: [{ context: "public/", from: "static/*", flatten: true }],
     }),
+    new webpack.DefinePlugin({
+      API_URL: JSON.stringify(process.env.API_URL),
+    }),
   ],
   module: {
     rules: [
