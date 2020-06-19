@@ -17,18 +17,4 @@ module.exports = () =>
         "/api": "http://localhost:3000",
       },
     },
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: { hmr: true },
-            },
-            "css-loader",
-          ],
-        },
-      ],
-    },
   });

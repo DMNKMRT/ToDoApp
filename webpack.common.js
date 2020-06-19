@@ -29,9 +29,13 @@ module.exports = (mode) => ({
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename:
-        mode === "production" ? "[name].[contenthash:8].bundle.css" : "[name].bundle.css",
+        mode === "production"
+          ? "[name].[contenthash:8].bundle.css"
+          : "[name].bundle.css",
       chunkFilename:
-        mode === "production" ? "[id].[contenthash:8].chunk.css" : "[id].chunk.css",
+        mode === "production"
+          ? "[id].[contenthash:8].chunk.css"
+          : "[id].chunk.css",
     }),
     new HtmlWebpackPlugin({
       template: "public/index.html.ejs",
@@ -85,6 +89,31 @@ module.exports = (mode) => ({
             loader: "file-loader",
             options: { name: "[contenthash:8].[ext]" },
           },
+        ],
+      },
+      {
+        test: /\.css$/,
+        exclude: /\.module\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: mode !== "production",
+            },
+          },
+          "css-loader",
+        ],
+      },
+      {
+        test: /\.module\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: mode !== "production",
+            },
+          },
+          { loader: "css-loader", options: { modules: true } },
         ],
       },
     ],

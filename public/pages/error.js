@@ -1,8 +1,10 @@
 import html from "./error.html";
-import "./error.css";
+import styles from "./error.module.css";
+
+import interpolate from "../utils/template.js";
 
 export default function render() {
   const element = document.createElement("div");
-  element.innerHTML = html;
+  element.innerHTML = interpolate(html, styles);
   return element;
 }

@@ -1,58 +1,77 @@
-<div id="todo-page" class="todo-page page">
-  <div class="top-bar">
-    <div id="list_id_output" class="top-bar-item"></div>
-    <button id="copy_text" class="top-bar-item">Copy ID</button>
+<div class="${todo-page} page">
+  <div class="${top-bar}">
+    <div id="list_id_output" class="${top-bar-item} ${list_id_output}"></div>
+    <button id="copy_text" class="${top-bar-item} ${copy_text}">Copy ID</button>
   </div>
   <!-- ToDo Karten -->
-  <ul id="todo_list" class="todo_list">
-    <li class="todo_item">
+  <ul id="todo_list" class="${todo_list}">
+    <li class="${todo_item}">
       <form id="todo_form" action="" onsubmit="return false;">
-        <h1 class="todo_item_title">
+        <h1 class="${todo_item_title}">
           <input
             type="text"
-            class="todo_input_title"
+            class="${todo_input}"
             id="todo_input_title"
             value=""
             placeholder="Enter a title"
             aria-label="Enter a todo title"
           />
         </h1>
-        <p class="todo_item_description">
+        <p class="${todo_item_description}">
           <input
             type="text"
-            class="todo_input_description"
+            class="${todo_input}"
             id="todo_input_description"
             value=""
             placeholder="Enter a description"
             aria-label="Enter a todo description"
           />
         </p>
-        <p id="pick_text">pick a color:</p>
-        <div id="color_select" class="color_select">
+        <p class="${pick_text}">pick a color:</p>
+        <div id="color_select" class="${color_select}">
           <div>
-            <input type="radio" name="color" id="color-red" value="red" />
-            <label class="color-box red" for="color-red"></label>
-          </div>
-
-          <div>
-            <input type="radio" name="color" id="color-green" value="green" />
-            <label class="color-box green" for="color-green"></label>
-          </div>
-
-          <div>
-            <input type="radio" name="color" id="color-yellow" value="yellow" />
-            <label class="color-box yellow" for="color-yellow"></label>
+            <input
+              type="radio"
+              name="color"
+              class="${color}"
+              id="color-red"
+              value="red"
+            />
+            <label class="${color-box} ${red}" for="color-red"></label>
           </div>
 
           <div>
             <input
               type="radio"
               name="color"
+              class="${color}"
+              id="color-green"
+              value="green"
+            />
+            <label class="${color-box} ${green}" for="color-green"></label>
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              name="color"
+              class="${color}"
+              id="color-yellow"
+              value="yellow"
+            />
+            <label class="${color-box} ${yellow}" for="color-yellow"></label>
+          </div>
+
+          <div>
+            <input
+              type="radio"
+              name="color"
+              class="${color}"
               id="color-blue"
               value="blue"
               checked
             />
-            <label class="color-box blue" for="color-blue"></label>
+            <label class="${color-box} ${blue}" for="color-blue"></label>
           </div>
         </div>
 

@@ -1,16 +1,22 @@
-<div id="start-page" class="start-page page page-active">
-  <div class="start_text">
-    <h1 id="willkommen">Welcome!!</h1>
-    <h2 id="enter_a_id">Enter an ID to open a list</h2>
+<div class="${start-page} page">
+  <div class="${start_text}">
+    <h1 class="${willkommen}">Welcome!!</h1>
+    <h2 class="${enter_id}">Enter an ID to open a list</h2>
   </div>
-  <div class="input_btn">
+  <div class="${input_btn}">
     <form id="open_list_form" action="" onsubmit="return false;">
-      <input type="text" id="list_id" placeholder="Enter id" aria-label="Enter a list id"/>
-      <button class="open_list_btn">Open</button>
+      <input
+        type="text"
+        id="list_id"
+        class="${list_id}"
+        placeholder="Enter id"
+        aria-label="Enter a list id"
+      />
+      <button class="${open_list_btn}">Open</button>
     </form>
-    <button id="new_list_btn">New List</button>
+    <button id="new_list_btn" class="${new_list_btn}">New List</button>
   </div>
-  <div class="start_text">
+  <div class="${start_text}">
     <h2>Or create a new list</h2>
   </div>
 </div>
