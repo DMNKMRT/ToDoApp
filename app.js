@@ -82,6 +82,10 @@ app.get("/api/subscribe/:list_id", sseMiddleware, (req, res) => {
   });
 });
 
+app.get("/api/ping", (req, res) => {
+  res.json({ success: true });
+});
+
 app
   .route("/api/:list_id")
   .get(get_todo_list, async (req, res) => {

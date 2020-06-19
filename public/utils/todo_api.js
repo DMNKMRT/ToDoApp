@@ -35,6 +35,9 @@ export default class TodoApi {
       callback(todo_item);
     });
   }
+  ping() {
+    return this._request(`${this.api_url}/api/ping`);
+  }
   _request(...args) {
     return request(...args).then((res) => {
       if ("error" in res) throw Error(res.error);
