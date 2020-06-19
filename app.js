@@ -76,7 +76,10 @@ app.get("/api/new", (req, res) => {
 app.get("/api/subscribe/:list_id", sseMiddleware, (req, res) => {
   const { list_id } = req.params;
   if (!subscribers[list_id]) subscribers[list_id] = [];
-  subscribers[list_id].push(res);
+  const index = subscribers[list_id].push(res) - 1;
+  req.on("close", () => {
+    subscribers[list_id].splice(index, 1);
+  });
 });
 
 app
