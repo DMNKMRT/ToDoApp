@@ -30,5 +30,5 @@ export default function render() {
   const element = document.createElement("div");
   element.innerHTML = interpolate(html, styles);
   main(element);
-  return element;
+  return element.firstChild;
 }

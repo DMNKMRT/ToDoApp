@@ -128,5 +128,5 @@ export default function render(args) {
   const element = document.createElement("div");
   element.innerHTML = interpolate(html, styles);
   main(element, args.id);
-  return element;
+  return element.firstChild;
 }

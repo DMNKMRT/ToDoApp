@@ -6,5 +6,5 @@ import interpolate from "../utils/template.js";
 export default function render() {
   const element = document.createElement("div");
   element.innerHTML = interpolate(html, styles);
-  return element;
+  return element.firstChild;
 }
