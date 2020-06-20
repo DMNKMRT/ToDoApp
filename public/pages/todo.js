@@ -1,5 +1,6 @@
 import html from "./todo.html";
 import styles from "./todo.module.css";
+import todoItemStyles from "../components/todo-item.module.css";
 
 import TodoItem from "../components/todo-item.js";
 
@@ -15,6 +16,8 @@ function main(container, id) {
   const copy_text_btn = qs("#copy_text");
   const todo_form = qs("#todo_form");
   const todo_list = qs("#todo_list");
+  const input_title = qs("#todo_input_title");
+  const input_description = qs("#todo_input_description");
 
   // Funktion um neue ToDos hinzuzufügen
   function addTodo(title, description, color) {
@@ -31,8 +34,6 @@ function main(container, id) {
   }
 
   function todoOnSubmit() {
-    const title = qs("#todo_input_title");
-    const description = qs("#todo_input_description");
     let color = "";
 
     for (let item of qsa('input[name="color"]')) {
@@ -43,11 +44,11 @@ function main(container, id) {
     }
 
     try {
-      if (!title.value) return;
-      addTodo(title.value, description.value, color);
+      if (!input_title.value) return;
+      addTodo(input_title.value, input_description.value, color);
     } finally {
-      title.value = "";
-      description.value = "";
+      input_title.value = "";
+      input_description.value = "";
       qs("#color-blue").checked = true;
     }
   }
@@ -124,9 +125,11 @@ function main(container, id) {
 }
 
 export default function render(args) {
-  console.log(args);
-  const element = document.createElement("div");
-  element.innerHTML = interpolate(html, styles);
+  const data = { ...todoItemStyles, ...styles };
+  console.log(data);
+  const container = document.createElement("div");
+  container.innerHTML = interpolate(html, data);
+  const element = container.firstChild;
   main(element, args.id);
-  return element.firstChild;
+  return element;
 }
