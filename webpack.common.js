@@ -113,7 +113,10 @@ module.exports = (mode) => ({
               hmr: mode !== "production",
             },
           },
-          { loader: "css-loader", options: { modules: true } },
+          {
+            loader: "css-loader",
+            options: { modules: true },
+          },
         ],
       },
     ],

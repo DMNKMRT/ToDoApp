@@ -1,0 +1,45 @@
+.todo_item {
+  display: flex;
+  /*background-color: rgb(223, 237, 238);*/
+  box-shadow: 4px 4px 4px #6d8f94;
+
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: 1rem;
+  margin-bottom: 3rem;
+
+  transition: box-shadow 0.35s ease-in-out;
+}
+
+.todo_item:hover {
+  box-shadow: 9px 9px 9px #8da8ac;
+  transition: box-shadow 0.35s ease-in-out;
+}
+
+.todo_item_title {
+  text-align: center;
+  width: 100%;
+  font-size: 2rem;
+  font-weight: bold;
+  border-bottom: 2px solid;
+}
+
+.todo_item_description {
+  font-size: 1.8rem;
+  padding: 0rem 1rem;
+}
+
+.todo_done_button {
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+  float: right;
+  width: 3rem;
+  height: 3rem;
+}
+
+.todo_done_button.checked::before {
+  content: "✓";
+  font-size: 1.7rem;
+  font-weight: bold;
+}

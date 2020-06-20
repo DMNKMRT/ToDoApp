@@ -9,9 +9,7 @@ export default function interpolate(template, data) {
 
   for (let [key, value] of Object.entries(data)) {
     const pattern = String.raw`\$\{${key}\}`;
-    console.log("Before:", value);
     value = sanitize(value);
-    console.log("After:", value);
     output = output.replace(new RegExp(pattern, "g"), value);
   }
   return output.toString();
