@@ -1,4 +1,7 @@
 import html from "./start.html";
+import styles from "./start.module.css";
+
+import interpolate from "../utils/template.js";
 
 function main(container) {
   const qs = container.querySelector.bind(container);
@@ -25,7 +28,7 @@ function main(container) {
 
 export default function render() {
   const element = document.createElement("div");
-  element.innerHTML = html;
+  element.innerHTML = interpolate(html, styles);
   main(element);
-  return element;
+  return element.firstChild;
 }

@@ -4,7 +4,10 @@ function sseMiddleware(req, res, next) {
     "cache-control": "no-cache",
     "content-type": "text/event-stream",
   });
-  setInterval(() => ping(res), 30000);
+  const interval = setInterval(() => ping(res), 30000);
+  req.on("close", () => {
+    clearInterval(interval);
+  });
   ping(res);
   next();
 }

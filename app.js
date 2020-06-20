@@ -1,6 +1,7 @@
 const path = require("path");
 
 const express = require("express");
+const expressStaticGzip = require("express-static-gzip");
 const cors = require("cors");
 const history = require("connect-history-api-fallback");
 const mongoose = require("mongoose");
@@ -23,7 +24,27 @@ const app = express();
 if (node_env == "production") app.use(httpsRedirectMiddleware());
 app.use(cors());
 app.use(history({ htmlAcceptHeaders: ["text/html", "application/xhtml+xml"] }));
-app.use(express.static(path.resolve(__dirname, "dist")));
+app.use(
+  expressStaticGzip(path.resolve(__dirname, "dist"), {
+    enableBrotli: true,
+    customCompressions: [
+      {
+        encodingName: "deflate",
+        fileExtension: "zz",
+      },
+    ],
+    orderPreference: ["br"],
+    etag: false,
+    lastModified: false,
+    setHeaders: (res, path) => {
+      if (/\.html(\.(br|gz|zz))?$/.test(path)) {
+        res.setHeader("Cache-Control", "no-cache");
+      } else {
+        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      }
+    },
+  })
+);
 app.use(express.json());
 
 const subscribers = {};
@@ -55,7 +76,14 @@ app.get("/api/new", (req, res) => {
 app.get("/api/subscribe/:list_id", sseMiddleware, (req, res) => {
   const { list_id } = req.params;
   if (!subscribers[list_id]) subscribers[list_id] = [];
-  subscribers[list_id].push(res);
+  const index = subscribers[list_id].push(res) - 1;
+  req.on("close", () => {
+    subscribers[list_id].splice(index, 1);
+  });
+});
+
+app.get("/api/ping", (req, res) => {
+  res.json({ success: true });
 });
 
 app

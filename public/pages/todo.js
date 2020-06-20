@@ -1,5 +1,9 @@
 import html from "./todo.html";
+import styles from "./todo.module.css";
+
 import TodoItem from "../components/todo-item.js";
+
+import interpolate from "../utils/template.js";
 
 function main(container, id) {
   const qs = container.querySelector.bind(container);
@@ -122,7 +126,7 @@ function main(container, id) {
 export default function render(args) {
   console.log(args);
   const element = document.createElement("div");
-  element.innerHTML = html;
+  element.innerHTML = interpolate(html, styles);
   main(element, args.id);
-  return element;
+  return element.firstChild;
 }
